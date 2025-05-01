@@ -6,12 +6,11 @@ This TypeScript script identifies and optionally deletes unused labels in your [
 
 ## ⚙️ Features
 
+- 🔐 Uses `.env` for secure API key management
 - ✅ Fetch all labels via pagination
 - 🔍 Detect labels with no assigned issues
 - 🧪 Preview labels (dry run) before deleting
 - 🛑 Label deletion is fully commented out for safety
-- 🔐 Uses `.env` for secure API key management
-- 🛠️ Written in modern, typed TypeScript
 
 ---
 
@@ -27,10 +26,15 @@ yarn install
 
 ### 2. Configure environment variables
 
- - Update the `.env` file with your Linear API key.
+1. Copy `.env.example` to `.env`.
+2. In `.env`, set your credentials and flags:
+   ```env
+   LINEAR_API_KEY=your_linear_api_key
+   DRY_RUN=true      # 'true' for dry run, set to 'false' to enable deletions
+   ```
 
 ### 3. Run the script
 
 ```bash
-yarn ts-node ./delete-unused.labels.ts
+yarn delete-unused-labels
 ```

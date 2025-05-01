@@ -5,11 +5,7 @@
     "type": "module",
     "main": "delete-unused-labels.ts",
     "scripts": {
-      "start": "ts-node delete.unused.labels.ts",
-      "build": "tsc",
-      "clean": "rm -rf dist",
-      "dev": "ts-node delete.unused.labels.ts",
-      "linear:delete-unused-labels": "ts-node delete.unused.labels.ts"
+      "delete-unused-labels": "ts-node delete.unused.labels.ts"
     },
     "keywords": [
       "linear",
