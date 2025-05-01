@@ -133,6 +133,7 @@ async function getAllLabels(): Promise<Label[]> {
     const emptyLabels = labels.filter(
       label => label.issues.nodes.length === 0 && !label.isGroup
     );
+    emptyLabels.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
 
     if (emptyLabels.length === 0) {
       console.log('✅ No empty labels to delete.');
