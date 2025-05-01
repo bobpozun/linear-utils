@@ -1,0 +1,33 @@
+{
+    "name": "linear-label-cleanup",
+    "version": "1.0.0",
+    "description": "A script to delete unused labels from Linear via the GraphQL API.",
+    "type": "module",
+    "main": "delete-unused-labels.ts",
+    "scripts": {
+      "start": "ts-node delete.unused.labels.ts",
+      "build": "tsc",
+      "clean": "rm -rf dist",
+      "dev": "ts-node delete.unused.labels.ts",
+      "linear:delete-unused-labels": "ts-node delete.unused.labels.ts"
+    },
+    "keywords": [
+      "linear",
+      "labels",
+      "cleanup",
+      "graphql",
+      "typescript"
+    ],
+    "author": "Robert Pozun",
+    "license": "MIT",
+    "dependencies": {
+      "dotenv": "^16.3.1",
+      "node-fetch": "^2.6.12"
+    },
+    "devDependencies": {
+      "@types/node": "^20.4.2",
+      "@types/node-fetch": "^2.6.4",
+      "ts-node": "^10.9.2",
+      "typescript": "^5.4.3"
+    }
+  }
