@@ -1,9 +1,8 @@
 {
-    "name": "linear-label-cleanup",
+    "name": "linear-utils",
     "version": "1.0.0",
-    "description": "A script to delete unused labels from Linear via the GraphQL API.",
+    "description": "A collection of command-line utilities for Linear workflows.ß",
     "type": "module",
-    "main": "delete-unused-labels.ts",
     "scripts": {
       "delete-unused-labels": "ts-node delete.unused.labels.ts"
     },

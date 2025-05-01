@@ -1,6 +1,6 @@
-# 🏷️ Linear Label Cleanup Script (TypeScript)
+# 🛠️ Linear Utils
 
-This TypeScript script identifies and optionally deletes unused labels in your [Linear](https://linear.app) workspace using the Linear GraphQL API.
+A collection of command-line utilities for Linear workflows.
 
 ---
 
@@ -11,6 +11,13 @@ This TypeScript script identifies and optionally deletes unused labels in your [
 - 🔍 Detect labels with no assigned issues
 - 🧪 Preview labels (dry run) before deleting
 - 🛑 Label deletion is fully commented out for safety
+
+## 🧰 Available Utilities
+
+- **Label Cleanup** (`yarn delete-unused-labels`): Identifies unused labels and optionally deletes them with confirmation.
+  - Fetches all labels, filters by issue count and excludes label groups.
+  - Dry-run mode by default (`DRY_RUN=true`).
+  - Confirmation prompt before deletion when enabled.
 
 ---
 
