@@ -13,17 +13,18 @@ function askQuestion(query: string): Promise<string> {
   }));
 }
 
-// Control dry-run via env var: set DRY_RUN=false to disable dry-run
-const DRY_RUN = process.env.DRY_RUN !== 'false';
+// Control dry-run via env var: must set DRY_RUN to "true" or "false"
+const DRY_RUN_RAW = process.env.DRY_RUN;
+if (DRY_RUN_RAW !== 'true' && DRY_RUN_RAW !== 'false') {
+  console.error('❌ Missing DRY_RUN environment variable. Please set to "true" or "false".');
+  process.exit(1);
+}
+const DRY_RUN = DRY_RUN_RAW === 'true';
 const LINEAR_API_KEY = process.env.LINEAR_API_KEY;
 const API_URL = 'https://api.linear.app/graphql';
 
 if (!LINEAR_API_KEY) {
   console.error('❌ Missing LINEAR_API_KEY environment variable.');
-  process.exit(1);
-}
-if (!DRY_RUN) {
-  console.error('❌ Missing DRY_RUN environment variable. Please set to "true" or "false".');
   process.exit(1);
 }
 
@@ -106,26 +107,25 @@ async function getAllLabels(): Promise<Label[]> {
   return labels;
 }
 
-// Delete label (commented out for safety)
-// async function deleteLabel(id: string, name: string): Promise<void> {
-//   const mutation = `
-//     mutation DeleteLabel($id: String!) {
-//       labelDelete(id: $id) {
-//         success
-//       }
-//     }
-//   `;
-//   try {
-//     const res = await linearQuery<{ labelDelete: { success: boolean } }>(mutation, { id });
-//     if (res.labelDelete.success) {
-//       console.log(`✅ Deleted label: ${name}`);
-//     } else {
-//       console.log(`⚠️ Could not delete label: ${name}`);
-//     }
-//   } catch (err) {
-//     console.error(`❌ Error deleting label ${name}:`, (err as Error).message);
-//   }
-// }
+async function deleteLabel(id: string, name: string): Promise<void> {
+  const mutation = `
+    mutation DeleteLabel($id: String!) {
+      issueLabelDelete(id: $id) {
+        success
+      }
+    }
+  `;
+  try {
+    const res = await linearQuery<{ issueLabelDelete: { success: boolean } }>(mutation, { id });
+    if (res.issueLabelDelete.success) {
+      console.log(`✅ Deleted label: ${name}`);
+    } else {
+      console.log(`⚠️ Could not delete label: ${name}`);
+    }
+  } catch (err) {
+    console.error(`❌ Error deleting label ${name}:`, (err as Error).message);
+  }
+}
 
 (async () => {
   try {
@@ -150,9 +150,11 @@ async function getAllLabels(): Promise<Label[]> {
       const confirmation = await askQuestion('\n🚨 WARNING: this will delete the above labels. Proceed? (y/N) ');
       if (confirmation.trim().toLowerCase() === 'y') {
         console.log('🚀 Proceeding with deletion (still commented out for safety).');
-        // for (const label of emptyLabels) {
-        //   await deleteLabel(label.id, label.name);
-        // }
+         for (const label of emptyLabels) {
+          console.log(`Deleting label: ${label.name}`);
+          await deleteLabel(label.id, label.name);
+        
+         }
       } else {
         console.log('❌ Deletion aborted by user.');
         return;
